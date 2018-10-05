@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Psychic-Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+
+<body>
+
+    <h1>Psychic-Game</h1>
+    <h2>Can you guess the LETTER the computer is thinking of?</h2>
+    <br />
+    <h3>Wins</h3>
+    <h3 id="wins"></h3>
+    <h3>Losses</h3>
+    <h3 id="losses"></h3>
+    <h3>Guesses Left</h3>
+    <h3 id="guessesLeft"></h3>
+    <h3>Letters Guessed</h3>
+    <h3 id="guessed"></h3>
+
+    <script>
+        var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        var wins = 0;
+        var losses = 0;
+        var guessesLeft = 10;
+        var guessed = [];
+        var choice;
+
+        choice = alphabet[Math.floor(Math.random() * alphabet.length)];
+        console.log(choice);
+
+        document.onkeyup = function (event) {
+
+            var guess = String.fromCharCode(event.keyCode).toLowerCase();
+            console.log(guess);
+
+            if (event.keyCode >= 65 && event.keyCode <= 90) {
+                guessed.push(guess);
+                document.getElementById("guessed").innerHTML = guessed.join(", ");
+            }
+
+            if (event.keyCode >= 65 && event.keyCode <= 90) {
+
+                if (guess == choice) {
+                    wins++;
+                    guessesLeft--;
+                    guessed = [];
+                    guessesLeft = 10;
+                    document.getElementById("guessed").innerHTML = guessed.join(", ");
+                    document.getElementById("wins").innerHTML = wins;
+                    document.getElementById("guessesLeft").innerHTML = guessesLeft;
+                    alert("Good job you win the letter was '" + guess + ". To bad there are no prizes or anything.");
+                    alert("Do you want to try again?");
+                    guessed = [];
+                    choice = alphabet[Math.floor(Math.random() * alphabet.length)];
+                    console.log(choice);
+
+                } else {
+                    guessesLeft = guessesLeft - 1;
+                    document.getElementById("guessesLeft").innerHTML = guessesLeft;
+                }
+            } else {
+                alert("HEY! letters only please. (also caps may mess this up a bit so maybe check to see if capslock is on)");
+            }
+
+            if (guessesLeft == 0) {
+                guessesLeft = 10;
+                guessed = [];
+                losses++;
+                document.getElementById("losses").innerHTML = losses;
+                document.getElementById("guessesLeft").innerHTML = guessesLeft;
+                document.getElementById("guessed").innerHTML = guessed.join(", ");
+                alert("You Lose!")
+                alert("Wanna play again?")
+                choice = alphabet[Math.floor(Math.random() * alphabet.length)];
+                console.log(choice);
+            }
+        }       
+    </script>
+</body>
+
+</html>
